@@ -15,17 +15,24 @@ app.get('/baidu', function (req, res) {
     var str = '';
 
     response.on('data', function (chunk) {
+        console.log("Reading data!!!")
         str += chunk;
     });
 
     response.on('end', function () {
+        console.log(response.statusCode)
         res.send(str)
     });
 
    }
 
-   http.request(options, callback).end();
+   var request = http.request(options, callback);
 
+   request.on('error', function(err) {
+    res.send("Error for reading from remote!!\n")
+   });
+
+   request.end()
 })
 
 var server = app.listen(8081, function () {
