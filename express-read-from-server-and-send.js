@@ -2,7 +2,6 @@ var express = require('express');
 var app = express();
 var Syslog = require('node-syslog');
 
-Syslog.init("node-syslog", Syslog.LOG_PID | Syslog.LOG_ODELAY, Syslog.LOG_LOCAL0);
 
 i = 0
 
@@ -25,7 +24,8 @@ app.get('/baidu', function (req, res) {
 
     response.on('end', function () {
         console.log(response.statusCode)
-        Syslog.log("Node Syslog Module output " + str) 
+        Syslog.init("node-syslog", Syslog.LOG_PID | Syslog.LOG_ODELAY, Syslog.LOG_LOCAL0);
+        Syslog.log("Node Syslog Module output %s", str) 
         res.send(str)
     });
 
